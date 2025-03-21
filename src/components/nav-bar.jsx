@@ -1,21 +1,18 @@
-import { Link, Outlet } from "react-router-dom"
-import './nav-bar.css'
-import { useEffect, useState } from "react"
-
-
+import { Link, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 const NavBar = () => {
-    const [currentTime, setCurrentTime] = useState(new Date() );
+    const [time, setTime] = useState(new Date());
 
-    useEffect( () => {
-        const interval = setInterval( () => {
-                setCurrentTime(newDate ());
-        }, 1000)
-
-    }, [] );
+    useEffect(() => {
+        const interval = setInterval(()=>{
+            setTime(new Date());
+        }, 1000);
+        return () => clearInterval(interval);
+    })
 
     return (
         <>
-          <nav className="navbar">
+            <nav className="navbar">
                 <div className="logo">Movies App</div>
                 <div>
                     <Link to="/">Home</Link>
@@ -24,15 +21,14 @@ const NavBar = () => {
                     <Link to="/contact-us">Contact Us</Link>
                     <Link to="/counter">Counter</Link>
                 </div>
-
                 <div className="clock-container">
-                    {currentTime.toLocaleTimeString() }
+                    {time.toLocaleTimeString()}
                 </div>
-
-            </nav> 
+            </nav>
             <Outlet />
         </>
+
     )
 }
 
-export default NavBar
+export default NavBar;
